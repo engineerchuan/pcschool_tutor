@@ -1,0 +1,52 @@
+{
+    "events": [
+      {
+        "class" : "overlay",
+        "clearCondition" : {
+            "type" : "typeInside",
+            "x" : 410,
+            "y" : 310,
+            "numLetters" : 1
+        },
+        "css" : {
+            "left" : "410px",
+            "top"  : "310px",
+            "width" : "200px",
+            "height" : "50px"
+        }
+    
+      },
+      {
+        "class" : "overlay",
+        "clearCondition" : {
+            "type" : "typeInside",
+            "x" : 110,
+            "y" : 10,
+            "numLetters" : 3
+        },
+        "css" : {
+            "left" : "110px",
+            "top"  : "10px",
+            "width" : "200px",
+            "height" : "50px"
+        }
+    
+      },
+      {
+        "class" : "overlay",
+        "clearCondition" : {
+            "type" : "mouseClick",
+            "x" : 710,
+            "y" : 0
+        },
+        "css" : {
+            "left" : "710px",
+            "top"  : "0px",
+            "width" : "30px",
+            "height" : "30px"
+        }
+    
+      } 
+    ]
+
+}

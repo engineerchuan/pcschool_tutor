@@ -1,0 +1,11 @@
+.overlay {
+    position: absolute;
+    border-width: 10px;
+    border-style: dotted;
+    pointer-events: none;
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.0);
+    border-color: red;
+    z-index: 999;
+}

@@ -1,0 +1,24 @@
+{
+
+  "manifest_version": 2,
+  "name": "PC School Web",
+  "version": "1.0",
+
+  "description": "Try to learn lessons",
+
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://www.google.com/"],
+      "css" : ["displayer.css"],
+      "js": ["jquery-3.0.0.min.js", "displayer.js"]
+    }
+  ],
+  "web_accessible_resources": [
+      "lessons/*"
+  ]
+
+}
