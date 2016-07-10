@@ -12,7 +12,7 @@
 
   "content_scripts": [
     {
-      "matches": ["*://www.google.com/"],
+      "matches": ["*://www.google.com/*", "file://*"],
       "css" : ["pcschool_web.css"],
       "js": ["jquery-3.0.0.min.js", "pcschool_web.js"]
     }

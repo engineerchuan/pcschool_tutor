@@ -3,18 +3,29 @@
       {
         "class" : "overlay",
         "clearCondition" : {
+            "type" : "nKeypresses",
+            "n" : 4
+        },
+        "position" : {
+            "type" : "elementByClass",
+            "class" : "sbib_a"
+        }
+      },
+      {
+        "class" : "overlay",
+        "clearCondition" : {
             "type" : "typeInside",
             "x" : 410,
             "y" : 310,
             "numLetters" : 1
         },
-        "css" : {
-            "left" : "410px",
-            "top"  : "310px",
-            "width" : "200px",
-            "height" : "50px"
+        "position" : {
+            "type" : "fixed",
+            "left" : 410,
+            "top" :310,
+            "width" : 200,
+            "height" : 50
         }
-    
       },
       {
         "class" : "overlay",
@@ -24,11 +35,14 @@
             "y" : 10,
             "numLetters" : 3
         },
-        "css" : {
-            "left" : "110px",
-            "top"  : "10px",
-            "width" : "200px",
-            "height" : "50px"
+        "overlay" : {
+            "type" : "position",
+            "css" : {
+                "left" : "110px",
+                "top"  : "10px",
+                "width" : "200px",
+                "height" : "50px"
+            }
         }
     
       },
@@ -39,11 +53,14 @@
             "x" : 710,
             "y" : 0
         },
-        "css" : {
-            "left" : "710px",
-            "top"  : "0px",
-            "width" : "30px",
-            "height" : "30px"
+        "overlay" : {
+            "type" : "position",
+            "css" : {
+                "left" : "710px",
+                "top"  : "0px",
+                "width" : "30px",
+                "height" : "30px"
+            }
         }
     
       } 
