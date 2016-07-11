@@ -1,0 +1,16 @@
+{
+    "title" : "Using Google.com",
+    "contents": [
+      {
+        "class" : "page",
+        "title" : "Introduction",
+        "text" : "This is a test lesson"
+      },
+      {
+        "class" : "page",
+        "title" : "Learn where the things are",
+        "text" : "Note that there is a search box, this is where you can search for things."
+      }
+    ]
+
+}

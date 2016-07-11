@@ -141,6 +141,7 @@ $(document).ready(function() {
     }
     
     function addClearCondition(overlay, instructions, spec, document) {
+
         if (spec.clearCondition.type == "nKeypresses") {
            addKeyPressCondition(overlay, instructions, spec, document);
         } else if (spec.clearCondition.type == "wordEntered") {
@@ -149,41 +150,117 @@ $(document).ready(function() {
            addMouseClickCondition(overlay, instructions, spec, document); 
         }
     }    
+
+    function makeLessonRequest(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+        xhr.open("GET", chrome.extension.getURL(url), true);
+        function handleStateChange() {
+          if (xhr.readyState == 4) {
+            var resp = JSON.parse(xhr.responseText);
+            callback(resp);
+
+          }  
+        }
+        xhr.send();
+    }
     
-    console.log("status - ready");
+
+    
+    function createLessonWindow() {
+        
+        var lw = document.createElement('div');
+        $(lw).addClass("lessonWindow uncollapsed");
+        document.body.appendChild(lw);
+        
+        // create a navigation panel to the left
+        var c = document.createElement('div');
+        $(c).addClass("container");
+        lw.appendChild(c);
+        
+        var r1 = document.createElement('div');
+        $(r1).addClass("row")
+        c.appendChild(r1);
+        
+        var nav = document.createElement('div');
+        $(nav).addClass("col-md-2");
+        r1.appendChild(nav);
+        $(nav).html("PC School Web Tutor");
+        $(nav).css("color", "#ffffff");
+        
+        var nav = document.createElement('div');
+        $(nav).addClass("col-md-9");
+        r1.appendChild(nav);
+        
+        var nav = document.createElement('div');
+        $(nav).addClass("col-md-1 toggleSize");
+        r1.appendChild(nav);
+        $(nav).html("Minimize");
+        var maximized = true;
+        $(nav).click(
+            function () {
+                if (maximized) {
+                    $(this).html("Maximize");
+                    // replace with easing 
+                    $(lw).addClass("collapsed");
+                    $(lw).removeClass("uncollapsed");
+                    maximized = false;
+                } else {
+                    
+                    $(this).html("Minimize");
+                    $(lw).removeClass("collapsed");
+                    $(lw).addClass("uncollapsed");
+                    maximized = true;;
+                }
+            }
+        );
+                
+        var r2 = document.createElement('div');
+        $(r2).addClass("row lessonBodyRow")
+        c.appendChild(r2);
+        
+        var nav = document.createElement('div');
+        $(nav).addClass("lessonNav");
+        r2.appendChild(nav);
+        
+        var mainarea = document.createElement('div');
+        $(mainarea).addClass("lessonMain");
+        r2.appendChild(mainarea);
+        
+        
+    }
+    createLessonWindow();
+    
+        console.log("status - ready");
     
     var lookupTable = {};
     lookupTable["https://www.google.com/?gws_rd=ssl"] ='/lessons/google.json';
-    lookupTable["file:///C:/Users/engin/Desktop/pcschool_tutor/pcschool_web/test/index.html"] ='/lessons/test.json';
+    lookupTable["file:///C:/Users/engin/Desktop/pcschool_tutor/pcschool_web/test/index.html"] ='/lessons/test2.json';
 
+    // send a signal to enable the school
+    $("#pcschool_extension").addClass("enabled");
     
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-    xhr.open("GET", chrome.extension.getURL(lookupTable[window.location.href]), true);
-    function handleStateChange() {
-      if (xhr.readyState == 4) {
-        var resp = JSON.parse(xhr.responseText);
-        var events = resp.events;
-        var i = 0;
-        var instructions = null;
-        function next() {
-            $(instructions).remove();
-            if (i < events.length) {
-                console.log("running createOverlay");
-                var overlay = createOverlay(events[i], document, next);
-                instructions = createInstructions(events[i], document);
-                addClearCondition(overlay, instructions, events[i], document);
-                overlay.attach();
-                i+=1;
-            } else {
-                console.log("finished");
-            }
-        }
-        next();
+    
+    // populate the nav window with lessons
+    function updateLessonNav(lesson) {
+        var ln = $(".lessonNav").first().get(0);
+        console.log(lesson);
         
-
-      }  
+        var d = document.createElement('div');
+        $(d).addClass("navTitle");
+        ln.appendChild(d);     
+        $(d).html(lesson.title);
+        
+        for (var k in lesson.contents) {
+           console.log(k);
+           var page = document.createElement('div');
+           $(page).addClass("navPage");
+           ln.appendChild(page);     
+           $(page).html("   " + lesson.contents[k].title);
+        }
     }
-    xhr.send();
+
+    makeLessonRequest(lookupTable[window.location.href], updateLessonNav);
+    
     
 });
