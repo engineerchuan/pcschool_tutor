@@ -17,50 +17,38 @@ $(document).ready(function() {
         
     }
     
-    function addKeyPressCondition(overlay, found, spec, document, callback) {
+    function addKeyPressCondition(overlay, instructions, spec, document) {
         
-
+        var textbox = $(instructions).children().first().get(0);
         var nToPress = spec.clearCondition.n;
         var keyPressListener = function(ev) {
             console.log("nToPress = ", nToPress);
             if (nToPress == 1) {
                 overlay.detach();
-            
-                /*var e = jQuery.Event("keydown");
-                e.which = ev.keyCode; // # Some key code value
-                e.keyCode = ev.keyCode;
-                found.trigger(e);*/
                 console.log("triggering the event");
             } else {
                 nToPress -= 1;
+                textbox.update(nToPress);
             }
         }
-        
+        var oldAttach = overlay.attach;
         overlay.attach = function() {
-            found.bind("keypress.pcschool", keyPressListener);
-            found.wrap(this);
+            $(this).bind("keypress.pcschool", keyPressListener);
+            oldAttach();
         }
-    
-        overlay.detach = function() {
-
-            var oldFocusElement = document.activeElement;
-            found.unwrap();
-            $(oldFocusElement).focus();  // restore focus
-            found.unbind("keypress.pcschool");
-            callback();
-        }
-        
+        textbox.update(nToPress);
         console.log("done");
     }
     
-    function addWordEnteredCondition(overlay, found, spec, document, callback) {
+    function addWordEnteredCondition(overlay, instructions, spec, document) {
         
+        var textbox = $(instructions).children().first().get(0);
         var word = spec.clearCondition.word;
         
         var wordListener = function(ev) {
             if (word[0] == ev.key) {
                 word = word.slice(1,word.length);
-                
+                textbox.update(word);
                 console.log("found letter ", ev.key);
             }
             if (word.length == 0) {
@@ -68,22 +56,49 @@ $(document).ready(function() {
             }
             
         }
-        
+        var oldAttach = overlay.attach;
         overlay.attach = function() {
-            found.bind("keypress.pcschool", wordListener);
-            found.wrap(this);
+            $(this).bind("keypress.pcschool", wordListener);
+            oldAttach();
         }
-    
-        overlay.detach = function() {
+        textbox.update(word);
 
-            var oldFocusElement = document.activeElement;
-            found.unwrap();
-            $(oldFocusElement).focus();  // restore focus
-            found.unbind("keypress.pcschool");
-            callback();
+    }
+    function addMouseClickCondition(overlay, instructions, spec, document) {
+        var textbox = $(instructions).children().first().get(0);
+        var oldAttach = overlay.attach;
+        overlay.attach = function() {
+            $(this).bind("click.pcschool", function() {overlay.detach();});
+            oldAttach();
         }
+        textbox.update();
+
     }
 
+    function createInstructions(spec, document) {
+        var d = document.createElement('div');
+        $(d).addClass("instructionsOverlay");
+        var e = document.createElement('div');
+        $(e).addClass("instructions");
+        if (spec.clearCondition.type == "nKeypresses") {
+            e.update = function(n) {
+                $(e).html("Type " + n + " letters");
+            }
+        } else if (spec.clearCondition.type == "wordEntered") {
+            e.update = function(word) {
+                $(e).html("Type " + word + " !");
+            }            
+        } else if (spec.clearCondition.type == "mouseClick") {
+            e.update = function() {
+                $(e).html("Click inside the box");
+            }
+            
+        }
+        d.appendChild(e);
+        document.body.appendChild(d);
+        return d;
+    }    
+    
     function createOverlay(spec, document, callback) {
         
         // every overlay can be constructed
@@ -107,54 +122,33 @@ $(document).ready(function() {
                 return overlay;;
             }
             found = found.first();
-            
-            if (spec.clearCondition.type == "nKeypresses") {
-               addKeyPressCondition(overlay, found, spec, document, callback);
-            } else if (spec.clearCondition.type == "wordEntered") {
-                
-               addWordEnteredCondition(overlay, found, spec, document, callback);
-                
-            }
 
+            overlay.attach = function() {
+                found.wrap(overlay);
+            }
+        
+            overlay.detach = function() {
+
+                var oldFocusElement = document.activeElement;
+                found.unwrap();
+                $(oldFocusElement).focus();
+                callback();
+            }
             
         }
         return overlay;
         
     }
-    function createOverlayNext() {
-        function next() {
-            createOverlay(i+1, events, document);
-        }
-        if (k.clearCondition.type == "mouseClick") {
-          $( document ).click(function(ev) {
-            console.log(ev.pageX, ev.pageY);
-            if (ev.pageX >= k.clearCondition.x &&
-                ev.pageX <= k.clearCondition.x + 50 &&
-                ev.pageY >= k.clearCondition.y &&
-                ev.pageY <= k.clearCondition.y + 50) {
-                console.log("inside the middle");        
-                d.remove();
-                $(document).unbind("click");
-                console.log("cleared");
-                next();
-            }
-          });
-        } else if (k.clearCondition.type == "typeInside") {
-           var numPressed = k.clearCondition.numLetters;
-           $( document ).keypress(function(ev) {
-                numPressed-=1;
-                if (numPressed == 0) {
-                    d.remove();
-                    $(document).unbind("keypress");
-                    console.log("cleared");
-                    next();
-               }
-           }); 
-        }
-        
-    }
-
     
+    function addClearCondition(overlay, instructions, spec, document) {
+        if (spec.clearCondition.type == "nKeypresses") {
+           addKeyPressCondition(overlay, instructions, spec, document);
+        } else if (spec.clearCondition.type == "wordEntered") {
+           addWordEnteredCondition(overlay, instructions, spec, document); 
+        } else if (spec.clearCondition.type == "mouseClick") {
+           addMouseClickCondition(overlay, instructions, spec, document); 
+        }
+    }    
     
     console.log("status - ready");
     
@@ -162,30 +156,34 @@ $(document).ready(function() {
     lookupTable["https://www.google.com/?gws_rd=ssl"] ='/lessons/google.json';
     lookupTable["file:///C:/Users/engin/Desktop/pcschool_tutor/pcschool_web/test/index.html"] ='/lessons/test.json';
 
-
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-        xhr.open("GET", chrome.extension.getURL(lookupTable[window.location.href]), true);
-        function handleStateChange() {
-          if (xhr.readyState == 4) {
-            var resp = JSON.parse(xhr.responseText);
-            var events = resp.events;
-            var i = 0;
-            function next() {
-                if (i < events.length) {
-                    console.log("runnign createOverlay");
-                    var overlay = createOverlay(events[i], document, next);
-                    overlay.attach();
-                    i+=1;
-                } else {
-                    console.log("finished");
-                }
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+    xhr.open("GET", chrome.extension.getURL(lookupTable[window.location.href]), true);
+    function handleStateChange() {
+      if (xhr.readyState == 4) {
+        var resp = JSON.parse(xhr.responseText);
+        var events = resp.events;
+        var i = 0;
+        var instructions = null;
+        function next() {
+            $(instructions).remove();
+            if (i < events.length) {
+                console.log("running createOverlay");
+                var overlay = createOverlay(events[i], document, next);
+                instructions = createInstructions(events[i], document);
+                addClearCondition(overlay, instructions, events[i], document);
+                overlay.attach();
+                i+=1;
+            } else {
+                console.log("finished");
             }
-            next();
-            
-
-          }  
         }
-        xhr.send();
+        next();
+        
+
+      }  
+    }
+    xhr.send();
     
 });

@@ -14,56 +14,13 @@
       {
         "class" : "overlay",
         "clearCondition" : {
-            "type" : "typeInside",
-            "x" : 410,
-            "y" : 310,
-            "numLetters" : 1
+            "type" : "mouseClick"
         },
         "position" : {
-            "type" : "fixed",
-            "left" : 410,
-            "top" :310,
-            "width" : 200,
-            "height" : 50
+            "type" : "elementByClass",
+            "class" : "sbico"
         }
-      },
-      {
-        "class" : "overlay",
-        "clearCondition" : {
-            "type" : "typeInside",
-            "x" : 110,
-            "y" : 10,
-            "numLetters" : 3
-        },
-        "overlay" : {
-            "type" : "position",
-            "css" : {
-                "left" : "110px",
-                "top"  : "10px",
-                "width" : "200px",
-                "height" : "50px"
-            }
-        }
-    
-      },
-      {
-        "class" : "overlay",
-        "clearCondition" : {
-            "type" : "mouseClick",
-            "x" : 710,
-            "y" : 0
-        },
-        "overlay" : {
-            "type" : "position",
-            "css" : {
-                "left" : "710px",
-                "top"  : "0px",
-                "width" : "30px",
-                "height" : "30px"
-            }
-        }
-    
-      } 
+      }
     ]
 
 }

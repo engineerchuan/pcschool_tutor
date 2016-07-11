@@ -21,6 +21,16 @@
             "type" : "elementByClass",
             "class" : "textbox2"
         }
+      },
+      {
+        "class" : "overlay",
+        "clearCondition" : {
+            "type" : "mouseClick"
+        },
+        "position" : {
+            "type" : "elementByClass",
+            "class" : "button4"
+        }
       }
     ]
 
