@@ -48,12 +48,19 @@
     z-index: 999;
 }
 
+
+/* COLORS 
+
+nancy blue = rgba(51,83,121, 1.0);
+crane's teal = rgba(39,115,92, 1.0);
+
+*/
 .lessonWindow {
     z-index: 9999;
     position: fixed;
     width: 100%;   
     z-index: 1003; 
-    background: rgba(0, 65, 0, 0.98);    
+    background: rgba(51,83,121, 1.0);
     left: 0%;
     bottom: 0px;
 }
@@ -67,7 +74,6 @@
 
 .lessonHeader {
     min-height: 20px;
-    background: rgba(0, 65, 0, 0.98);        
 }
 .lessonWindow .container {
     margin: 0px;
@@ -76,16 +82,22 @@
 }
 
 .lessonNav {
-    position: absolute;
+    /*position: absolute;
     height: 100%;
-    width: 30%;
+    width: 30%;*/
     background: rgba(100, 200, 200, 0.98);
-    padding-left: 10px;
+    height: 100%;
+    /*padding-left: 10px;*/
 }
 
-.navPage {
+.lwPageNav {
     padding-left: 10px;
+    cursor: pointer;
+    color: #0000ff;
     
+}
+.lwPageNavBolded {
+   font-weight: bold;
 }
 
 .lessonBodyRow {
@@ -93,11 +105,12 @@
 }
 
 .lessonMain {
-    height: 100%;
+    /*height: 100%;
     position: absolute;
     left: 30%;
-    width: 70%;
-    background: rgba(100, 200, 100, 0.98);
+    width: 70%;*/
+    background:  rgba(39,115,92, 1.0);
+    height: 100%;
 }
 
 .topMenu {

@@ -1,0 +1,32 @@
+<html>
+
+  <head>
+    <title>Test File</title>
+    <script src="3rd/jquery-3.0.0.min.js"></script>
+    <script src="js/pcschool_web.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="3rd/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/pcschool_web.css">
+
+    <script>
+
+      $(document).ready(function() {
+    	createLessonWindow();
+    	
+    	console.log("status - ready");
+    	
+        // send a signal to enable the school
+        $("#pcschool_extension").addClass("enabled");
+	
+        makeLessonRequest("lessons/test2.json", updateLessonNav);
+      });
+	
+    </script>
+  </head>
+
+  <body>
+
+    
+  </body>
+
+</html>

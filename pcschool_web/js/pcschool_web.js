@@ -1,5 +1,3 @@
-$(document).ready(function() {
-    
     function overlayFixed(left, top, width, height, border) {
         
         // Creates a transparent box at the positions shown
@@ -154,7 +152,7 @@ $(document).ready(function() {
     function makeLessonRequest(url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-        xhr.open("GET", chrome.extension.getURL(url), true);
+        xhr.open("GET", url, true);
         function handleStateChange() {
           if (xhr.readyState == 4) {
             var resp = JSON.parse(xhr.responseText);
@@ -165,9 +163,11 @@ $(document).ready(function() {
         xhr.send();
     }
     
-    function makePageRequest(iPage, lesson) {
+    function displayPage(iPage, lesson) {
+
         var page = lesson.contents[iPage];
         var ma = $(".lessonMain").first().get(0);
+        var ln = $(".lessonNav").first().get(0);
         
         if (page.HTMLContentLink) {
         
@@ -175,19 +175,24 @@ $(document).ready(function() {
             
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-            xhr.open("GET", chrome.extension.getURL(url), true);
+            xhr.open("GET", url, true);
             function handleStateChange() {
               if (xhr.readyState == 4) {
+
                 var resp = $.parseHTML(xhr.responseText);
+
                 $(ma).html(resp);
-                $(ma).find(".container").css("height", "90%");
+
+                var classKey = "lwPageNav" + "_" + iPage;
+                $(ln).find(".lwPageNav").removeClass("lwPageNavBolded");
+                $(ln).find("." + classKey).addClass("lwPageNavBolded");
 
                 // create forward or backward buttons
                 if (iPage > 0) {
                     $(".topMenu1").html("Previous");
                     $(".topMenu1").unbind();
                     $(".topMenu1").click( function() {
-                        makePageRequest(iPage-1, lesson);
+                        displayPage(iPage-1, lesson);
                     });
                 } else {
                     $(".topMenu1").empty();
@@ -200,34 +205,23 @@ $(document).ready(function() {
                     $(".topMenu2").unbind();
                     $(".topMenu2").click( function() {
 
-                        makePageRequest(iPage+1, lesson);
+                        displayPage(iPage+1, lesson);
                     });
                 } else {
                     $(".topMenu2").empty();
-                    
                 }
-
-
               }  
             }
             xhr.send();
    
         }
     }
-    
 
-    
-    function createLessonWindow() {
-        
-        var lw = document.createElement('div');
-        $(lw).addClass("lessonWindow uncollapsed");
-        document.body.appendChild(lw);
-        
-        // create a navigation panel to the left
-        var c = document.createElement('div');
-        $(c).addClass("container");
-        lw.appendChild(c);
-        
+
+    function createLWMenuBar(lw) {
+
+        var c = $(lw).find(".container").first().get(0);
+
         var r1 = document.createElement('div');
         $(r1).addClass("row lessonHeader")
         c.appendChild(r1);
@@ -273,56 +267,66 @@ $(document).ready(function() {
                 }
             }
         );
+
+    }    
+
+    
+    function createLessonWindow() {
+        
+        var lw = document.createElement('div');
+        $(lw).addClass("lessonWindow uncollapsed");
+        document.body.appendChild(lw);
+        
+        // create a navigation panel to the left
+        var c = document.createElement('div');
+        $(c).addClass("container");
+        lw.appendChild(c);
+
+        createLWMenuBar(lw);
                 
         var r2 = document.createElement('div');
         $(r2).addClass("row lessonBodyRow")
         c.appendChild(r2);
         
         var nav = document.createElement('div');
-        $(nav).addClass("lessonNav");
+        $(nav).addClass("col-md-4 lessonNav");
         r2.appendChild(nav);
         
         var mainarea = document.createElement('div');
-        $(mainarea).addClass("lessonMain");
+        $(mainarea).addClass("col-md-8 lessonMain");
         r2.appendChild(mainarea);
         
         
     }
-    createLessonWindow();
-    
-        console.log("status - ready");
-    
-    var lookupTable = {};
-    lookupTable["https://www.google.com/?gws_rd=ssl"] ='/lessons/google.json';
-    lookupTable["file:///C:/Users/engin/Desktop/pcschool_tutor/pcschool_web/test/index.html"] ='/lessons/test2.json';
-
-    // send a signal to enable the school
-    $("#pcschool_extension").addClass("enabled");
     
     
-    // populate the nav window with lessons
     function updateLessonNav(lesson) {
+
         var ln = $(".lessonNav").first().get(0);
-        console.log(lesson);
         
         var d = document.createElement('div');
         $(d).addClass("navTitle");
         ln.appendChild(d);     
         $(d).html(lesson.title);
         
-        for (var k in lesson.contents) {
-           console.log(k);
+        for (iPage = 0; iPage < lesson.contents.length; ++iPage) {
+           console.log("ipage = ", iPage);
            var page = document.createElement('div');
-           $(page).addClass("navPage");
+           $(page).addClass("lwPageNav").addClass("lwPageNav" + "_" + iPage);
            ln.appendChild(page);     
-           $(page).html("   " + lesson.contents[k].title);
+           $(page).html("   " + lesson.contents[iPage].title + " -  " + (iPage+1) + "/" + lesson.contents.length);
+
+           // anonymous function to pass by value
+           (function (i) {
+             $(page).click(
+               function () {
+                 displayPage(i, lesson, function() {});
+               }
+             );
+           })(iPage);
         }
         
         // go and populate the first lesson
         
-        makePageRequest(0, lesson, function() {});
+        displayPage(0, lesson, function() {});
     }
-
-    makeLessonRequest(lookupTable[window.location.href], updateLessonNav);
-
-});

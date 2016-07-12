@@ -13,8 +13,8 @@
   "content_scripts": [
     {
       "matches": ["*://www.google.com/*", "file://*pcschool_web/*"],
-      "css" : ["bootstrap.css", "pcschool_web.css"],
-      "js": ["jquery-3.0.0.min.js", "pcschool_web.js"]
+      "css" : ["3rd/bootstrap.css", "css/pcschool_web.css"],
+      "js": ["3rd/jquery-3.0.0.min.js", "js/pcschool_web.js"]
     }
   ],
   "web_accessible_resources": [
