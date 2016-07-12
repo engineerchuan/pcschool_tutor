@@ -1,0 +1,15 @@
+.lessonNav {
+    background: rgba(100, 200, 200, 0.98);
+    height: 100%;
+    overflow-y:scroll;
+}
+
+.lwPageNav {
+    padding-left: 10px;
+    cursor: pointer;
+    color: #0000ff;
+    
+}
+.lwPageNavBolded {
+   font-weight: bold;
+}
