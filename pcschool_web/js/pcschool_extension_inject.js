@@ -9,7 +9,8 @@ $( document ).ready(function() {
     createURL = function(url) {
         return chrome.extension.getURL(url);
     }
-
+   
+    
     makeLessonRequest("lessons/test2.json", updateLessonNav);
  
 });

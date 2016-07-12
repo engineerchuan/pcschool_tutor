@@ -63,10 +63,12 @@ crane's teal = rgba(39,115,92, 1.0);
     background: rgba(51,83,121, 1.0);
     left: 0%;
     bottom: 0px;
+
 }
 .uncollapsed {
     height: 30%;
-    min-height: 200px;
+    /*min-height: 200px;*/
+    
 }
 .collapsed {
     height: 30px;
@@ -75,14 +77,20 @@ crane's teal = rgba(39,115,92, 1.0);
 .lessonHeader {
     min-height: 30px;
 }
-.lessonWindow .container {
+.pcschool .container {
     margin: 0px;
     width: 100%;
     height: 100%;
+    padding: 0px;
+}
+.pcschool .row {
+    width: 100%;
+    margin: 0px;
 }
 
 .lessonBodyRow {
     min-height: 80%;
+    height: 100%;
 }
 
 .topMenu {

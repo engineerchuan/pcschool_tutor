@@ -329,7 +329,7 @@ function createLWMenuBar(lw) {
 function createLessonWindow() {
     
     var lw = document.createElement('div');
-    $(lw).addClass("lessonWindow uncollapsed");
+    $(lw).addClass("pcschool lessonWindow uncollapsed");
     document.body.appendChild(lw);
     
     // create a navigation panel to the left
