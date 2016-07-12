@@ -11,6 +11,6 @@ $( document ).ready(function() {
     }
    
     
-    makeLessonRequest("lessons/test2.json", updateLessonNav);
+    makeLessonRequest("lessons/google.json", updateLessonNav);
  
 });
