@@ -1,25 +1,15 @@
 {
-    "events": [
+    "title" : "Using Google.com",
+    "contents": [
       {
-        "class" : "overlay",
-        "clearCondition" : {
-            "type" : "nKeypresses",
-            "n" : 4
-        },
-        "position" : {
-            "type" : "elementByClass",
-            "class" : "sbib_a"
-        }
+        "class" : "page",
+        "title" : "Introduction",
+        "HTMLContentLink" : "/lessons/google/intro.html"
       },
       {
-        "class" : "overlay",
-        "clearCondition" : {
-            "type" : "mouseClick"
-        },
-        "position" : {
-            "type" : "elementByClass",
-            "class" : "sbico"
-        }
+        "class" : "page",
+        "title" : "Getting to Google",
+        "HTMLContentLink" : "/lessons/google/gettingtogoogle.html"
       }
     ]
 

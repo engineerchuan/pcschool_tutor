@@ -165,6 +165,56 @@ $(document).ready(function() {
         xhr.send();
     }
     
+    function makePageRequest(iPage, lesson) {
+        var page = lesson.contents[iPage];
+        var ma = $(".lessonMain").first().get(0);
+        
+        if (page.HTMLContentLink) {
+        
+            var url = page.HTMLContentLink;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+            xhr.open("GET", chrome.extension.getURL(url), true);
+            function handleStateChange() {
+              if (xhr.readyState == 4) {
+                var resp = $.parseHTML(xhr.responseText);
+                $(ma).html(resp);
+                $(ma).find(".container").css("height", "90%");
+
+                // create forward or backward buttons
+                if (iPage > 0) {
+                    $(".topMenu1").html("Previous");
+                    $(".topMenu1").unbind();
+                    $(".topMenu1").click( function() {
+                        makePageRequest(iPage-1, lesson);
+                    });
+                } else {
+                    $(".topMenu1").empty();
+                    
+                }
+
+                // create forward or backward buttons
+                if (iPage < lesson.contents.length-1) {
+                    $(".topMenu2").html("Next");
+                    $(".topMenu2").unbind();
+                    $(".topMenu2").click( function() {
+
+                        makePageRequest(iPage+1, lesson);
+                    });
+                } else {
+                    $(".topMenu2").empty();
+                    
+                }
+
+
+              }  
+            }
+            xhr.send();
+   
+        }
+    }
+    
 
     
     function createLessonWindow() {
@@ -179,7 +229,7 @@ $(document).ready(function() {
         lw.appendChild(c);
         
         var r1 = document.createElement('div');
-        $(r1).addClass("row")
+        $(r1).addClass("row lessonHeader")
         c.appendChild(r1);
         
         var nav = document.createElement('div');
@@ -189,11 +239,20 @@ $(document).ready(function() {
         $(nav).css("color", "#ffffff");
         
         var nav = document.createElement('div');
-        $(nav).addClass("col-md-9");
+        $(nav).addClass("col-md-7");
         r1.appendChild(nav);
         
         var nav = document.createElement('div');
-        $(nav).addClass("col-md-1 toggleSize");
+        $(nav).addClass("col-md-1 topMenu topMenu1");
+        r1.appendChild(nav);
+        
+        var nav = document.createElement('div');
+        $(nav).addClass("col-md-1 topMenu topMenu2");
+        r1.appendChild(nav);
+        
+        
+        var nav = document.createElement('div');
+        $(nav).addClass("col-md-1 topMenu topMenu3");
         r1.appendChild(nav);
         $(nav).html("Minimize");
         var maximized = true;
@@ -258,9 +317,12 @@ $(document).ready(function() {
            ln.appendChild(page);     
            $(page).html("   " + lesson.contents[k].title);
         }
+        
+        // go and populate the first lesson
+        
+        makePageRequest(0, lesson, function() {});
     }
 
     makeLessonRequest(lookupTable[window.location.href], updateLessonNav);
-    
-    
+
 });

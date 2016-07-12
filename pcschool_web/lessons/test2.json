@@ -4,12 +4,12 @@
       {
         "class" : "page",
         "title" : "Introduction",
-        "text" : "This is a test lesson"
+        "HTMLContentLink" : "/lessons/test2/intro.html"
       },
       {
         "class" : "page",
-        "title" : "Learn where the things are",
-        "text" : "Note that there is a search box, this is where you can search for things."
+        "title" : "Getting to Google",
+        "HTMLContentLink" : "/lessons/test2/gettingtogoogle.html"
       }
     ]
 

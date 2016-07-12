@@ -55,8 +55,7 @@
     z-index: 1003; 
     background: rgba(0, 65, 0, 0.98);    
     left: 0%;
-    border-radius: 20px;
-    bottom: -20px; // to account for border-radius
+    bottom: 0px;
 }
 .uncollapsed {
     height: 30%;
@@ -66,6 +65,10 @@
     height: 40px;
 }
 
+.lessonHeader {
+    min-height: 20px;
+    background: rgba(0, 65, 0, 0.98);        
+}
 .lessonWindow .container {
     margin: 0px;
     width: 100%;
@@ -97,12 +100,7 @@
     background: rgba(100, 200, 100, 0.98);
 }
 
-.lessonHeader {
-    background: rgba(256, 200, 200, 0.98); 
-    min-height: 20px;
-    
-}
-.toggleSize {
+.topMenu {
     color: #ffffff;
-    
+    cursor: pointer;
 }
