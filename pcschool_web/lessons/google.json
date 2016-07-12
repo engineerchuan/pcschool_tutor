@@ -2,14 +2,43 @@
     "title" : "Using Google.com",
     "contents": [
       {
-        "class" : "page",
+        "type" : "linkPage",
         "title" : "Introduction",
-        "HTMLContentLink" : "/lessons/google/intro.html"
+        "HTMLContentLink" : "/lessons/test2/intro.html"
       },
       {
-        "class" : "page",
+        "type" : "contentPage",
         "title" : "Getting to Google",
-        "HTMLContentLink" : "/lessons/google/gettingtogoogle.html"
+        "HTMLContent": "Type in www.google.com into the browser bar"
+      },
+      {
+        "type" : "contentPage",
+        "title" : "The Search Bar",
+        "HTMLContent" : "The search bar shows what you need to search for"
+      },
+      {
+        "type" : "imagePage",
+        "title" : "The Search Bar",
+        "imageLink" : "/test/searchbar.PNG",
+        "HTMLContent" : "Start typing in the search bar, as soon as you start typing, google will start showing results",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": ".sbib_a"
+          }
+        ]
+      },
+      {
+        "type" : "imagePage",
+        "title" : "The Search Button",
+        "imageLink" : "/test/searchbar.PNG",
+        "HTMLContent" : "Click the Google Search Button to actually search for something",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": "input[name='btnK']"
+          }
+        ]
       }
     ]
 

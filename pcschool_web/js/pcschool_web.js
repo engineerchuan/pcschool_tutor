@@ -210,6 +210,7 @@ function renderPageOverlays(iPage, lesson) {
 
 function renderPage(iPage, data, lesson) {
 
+    var page = lesson.contents[iPage];
     var ma = $(".lessonMain").first().get(0);
     var ln = $(".lessonNav").first().get(0);
 
@@ -243,11 +244,57 @@ function renderPage(iPage, data, lesson) {
     } else {
         $(".topMenu2").empty();
     }
+
+    // if the page is a videoPage
+if (page.type == "videoPage") {
+
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('pcyoutubeplayer', {
+          height: '390',
+          width: '640',
+          videoId: 'M7lc1UVf-VE',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+}
+
     renderPageOverlays(iPage, lesson);
 }
 
 function displayPage(iPage, lesson) {
 
+    console.log("displaying page");
     var page = lesson.contents[iPage];
     
     if (page.type == "linkPage") {
@@ -294,6 +341,22 @@ function displayPage(iPage, lesson) {
             var resp = $.parseHTML(xhr.responseText);
             $(resp).find(".title").html(page.title);
             $(resp).find(".image").html('<img src="' + createURL(page.imageLink) + '"></img>');
+            $(resp).find(".pccontent").html(page.HTMLContent);
+            renderPage(iPage, resp, lesson);
+          }  
+        }
+        xhr.send();
+    } else if (page.type == "videoPage") {
+
+        var url = "templates/videoPage.html";
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+        xhr.open("GET", createURL(url), true);
+        function handleStateChange() {
+          if (xhr.readyState == 4) {
+            var resp = $.parseHTML(xhr.responseText, document, true);
+            $(resp).find(".title").html(page.title);
             $(resp).find(".pccontent").html(page.HTMLContent);
             renderPage(iPage, resp, lesson);
           }  

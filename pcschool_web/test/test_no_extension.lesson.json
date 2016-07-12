@@ -1,0 +1,38 @@
+{
+    "title" : "Test Lesson",
+    "contents": [
+      {
+        "type" : "contentPage",
+        "title" : "Introduction",
+        "HTMLContent" : "This lesson is designed to test the capabilities of the PC School System"
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Select First Input",
+        "HTMLContent": "The overlay should select the first input",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": "input[type='text']"
+          }
+        ]
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Select Moving Input",
+        "HTMLContent": "The overlay should attach to the moving input",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": "#test3enclosure"
+          }
+        ]
+      },
+      {
+        "type" : "videoPage",
+        "title" : "Display a video",
+        "HTMLContent": "This shows a video"
+      }
+    ]
+
+}

@@ -1,0 +1,68 @@
+<html>
+
+  <head>
+    <title>Test File</title>
+
+    <!-- extension spoofing -->
+
+    <script src="../3rd/jquery-3.0.0.min.js"></script>
+    <script src="../js/pcschool_web.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../3rd/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../3rd/opensans.css">
+    <link rel="stylesheet" type="text/css" href="../css/pcschool.css">
+    <link rel="stylesheet" type="text/css" href="../css/pcschool_lesson_main.css">
+    <link rel="stylesheet" type="text/css" href="../css/pcschool_lesson_nav.css">
+
+    <script>
+
+      $(document).ready(function() {
+
+    	createLessonWindow();
+    	
+    	console.log("status - ready");
+    	
+        // send a signal to enable the school
+        $("#pcschool_extension").addClass("enabled");
+
+        createURL = function (url) {
+          return "../" + url;
+        }
+
+        makeLessonRequest(createURL("test/test_no_extension.lesson.json"), updateLessonNav);
+
+      });
+	
+    </script>
+
+    <!-- end extension spoofing -->
+
+    <script>
+      function moveTest3() {
+        //console.log("moving test 3");
+        var left = $("#test3enclosure").offset().left;
+        //console.log(left);
+        var newLeft = (left + 300) % 800;
+        $("#test3enclosure").css("left", newLeft + "px");
+        setTimeout(moveTest3, 1500);
+      }
+
+      $(document).ready(function() {
+        moveTest3();
+      });
+
+    </script>
+
+  </head>
+
+  <body>
+
+    <input type="text" id="test1"> Test 1</input>
+    <input type="text" id="test2"> Test 2</input>
+    <div id="test3enclosure" style="position:absolute;left:200px;top:300px;">
+      <input type="text" id="test3"> Moving Test 3</input>
+    </div>
+    
+  </body>
+
+</html>
