@@ -8,10 +8,16 @@
     height: 100%;
 }
 
+.lessonMain .pccontent {
+    
+}
+
 .lessonMain .title {
   font-size: 20px;
   text-align: center;
+  font-weight: bold;
 }
+
 
 .lessonMain .image {
   height: 100%;

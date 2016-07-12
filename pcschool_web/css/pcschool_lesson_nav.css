@@ -4,6 +4,10 @@
     overflow-y:scroll;
 }
 
+.navTitle h4 {
+    font-weight: bold;
+}
+
 .lwPageNav {
     padding-left: 10px;
     cursor: pointer;

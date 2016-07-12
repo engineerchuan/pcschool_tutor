@@ -1,6 +1,13 @@
 .pcschool {
     
     font-family: "Open Sans";
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.pcschool h4 {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .highlighted {
@@ -15,6 +22,9 @@
     border-color: red;
     margin-top: -2px;
     margin-left: -2px;
+    position:absolute;
+    z-index: 1002;
+    pointer-events: none;
     /*display: inline-block;*/
 }
 
@@ -91,6 +101,7 @@ crane's teal = rgba(39,115,92, 1.0);
 .pcschool .row {
     width: 100%;
     margin: 0px;
+    padding: 0px;
 }
 
 .lessonBodyRow {

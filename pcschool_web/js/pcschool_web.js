@@ -99,44 +99,73 @@ function createInstructions(spec, document) {
     return d;
 }    
 
-function createOverlay(spec, document, callback) {
+function createOverlay(spec, document) {
     
     // every overlay can be constructed
     // it will be constructed with a visible event
     // it will be constructed with a destructor
     // it will bind to other things
 
-    console.log(spec.position.type);
     var overlay = null;
     
-    if (spec.position.type == "fixed") {
+    if (spec.type == "fixed") {
         
-        overlay = overlayFixed(rect.left, rect.top, rect.width, rect.height, 5);
+
         
-    } else if (spec.position.type == "elementByClass") {
+    } else if (spec.type == "elementOverlay") {
         overlay = document.createElement('div');
         $(overlay).addClass("wrapoverlay");
-        var found = $(document).find("." + spec.position.class);
+
+        var found = $(document).find(spec.searchQuery);
         if (found.length == 0) {
-            alert("Failed to find element By Class ");
-            return overlay;;
+            console.log("ERROR: failed to find element by searchQuery " + spec.searchQuery);
+            return null;
         }
         found = found.first();
 
-        overlay.attach = function() {
-            found.wrap(overlay);
-        }
-    
-        overlay.detach = function() {
+        $(overlay).css("left", found.offset().left + "px");
+        $(overlay).css("top", found.offset().top + "px");
+        $(overlay).css("width", found.outerWidth() + "px");
+        $(overlay).css("height", found.outerHeight() + "px");
+        
+        // create a listener that will poll the stuff for changes
+        function resetPosition() {
+            if (overlay.active) {
 
-            var oldFocusElement = document.activeElement;
-            found.unwrap();
-            $(oldFocusElement).focus();
-            callback();
+                $(overlay).css("left", found.offset().left + "px");
+                $(overlay).css("top", found.offset().top + "px");
+                $(overlay).css("width", found.outerWidth() + "px");
+                $(overlay).css("height", found.outerHeight() + "px");
+                setTimeout(resetPosition, 1000);
+            } else {
+                console.log("reset position stopped");                  
+            }
         }
         
+        overlay.attach = function() {
+            document.body.appendChild(overlay);
+            overlay.active = true;
+            console.log("reset position started");
+            resetPosition();
+        }
+
+        overlay.detach = function() {
+            $(overlay).remove();
+            overlay.active = false;
+        }
+        
+        var ma = $(".lessonMain").first().get(0);
+        $(ma).bind("DOMSubtreeModified.pcschool",function(){
+            $(ma).unbind("DOMSubtreeModified.pcschool");
+            overlay.detach();
+            
+        });
+        
+
+        
+        
     }
-    return overlay;
+    overlay.attach();
     
 }
 
@@ -164,45 +193,57 @@ function makeLessonRequest(url, callback) {
     xhr.send();
 }
 
+function renderSinglePageOverlay(overlay) {
+    console.log("rendering single overlay");
+    createOverlay(overlay, document);
+}
+
+function renderPageOverlays(iPage, lesson) {
+    var page = lesson.contents[iPage];
+    if (page.overlays) {
+        for (var i = 0 ; i < page.overlays.length; ++i) {
+            var overlay = page.overlays[i];
+            renderSinglePageOverlay(overlay);
+        }
+    }
+}
 
 function renderPage(iPage, data, lesson) {
-
 
     var ma = $(".lessonMain").first().get(0);
     var ln = $(".lessonNav").first().get(0);
 
-            $(ma).html(data);
+    $(ma).html(data);
 
-            // bold the navigation page
-            var classKey = "lwPageNav" + "_" + iPage;
-            $(ln).find(".lwPageNav").removeClass("lwPageNavBolded");
-            $(ln).find("." + classKey).addClass("lwPageNavBolded");
+    // bold the navigation page
+    var classKey = "lwPageNav" + "_" + iPage;
+    $(ln).find(".lwPageNav").removeClass("lwPageNavBolded");
+    $(ln).find("." + classKey).addClass("lwPageNavBolded");
 
-            // create forward or backward buttons
-            if (iPage > 0) {
-                $(".topMenu1").html("Previous");
-                $(".topMenu1").unbind();
-                $(".topMenu1").click( function() {
-                    displayPage(iPage-1, lesson);
-                });
-            } else {
-                $(".topMenu1").empty();
-                
-            }
+    // create forward or backward buttons
+    if (iPage > 0) {
+        $(".topMenu1").html("Previous");
+        $(".topMenu1").unbind();
+        $(".topMenu1").click( function() {
+            displayPage(iPage-1, lesson);
+        });
+    } else {
+        $(".topMenu1").empty();
+        
+    }
 
-            // create forward or backward buttons
-            if (iPage < lesson.contents.length-1) {
-                $(".topMenu2").html("Next");
-                $(".topMenu2").unbind();
-                $(".topMenu2").click( function() {
+    // create forward or backward buttons
+    if (iPage < lesson.contents.length-1) {
+        $(".topMenu2").html("Next");
+        $(".topMenu2").unbind();
+        $(".topMenu2").click( function() {
 
-                    displayPage(iPage+1, lesson);
-                });
-            } else {
-                $(".topMenu2").empty();
-            }
-
-
+            displayPage(iPage+1, lesson);
+        });
+    } else {
+        $(".topMenu2").empty();
+    }
+    renderPageOverlays(iPage, lesson);
 }
 
 function displayPage(iPage, lesson) {
@@ -235,7 +276,7 @@ function displayPage(iPage, lesson) {
           if (xhr.readyState == 4) {
             var resp = $.parseHTML(xhr.responseText);
             $(resp).find(".title").html(page.title);
-            $(resp).find(".content").html(page.HTMLContent);
+            $(resp).find(".pccontent").html(page.HTMLContent);
             renderPage(iPage, resp, lesson);
           }  
         }
@@ -253,7 +294,7 @@ function displayPage(iPage, lesson) {
             var resp = $.parseHTML(xhr.responseText);
             $(resp).find(".title").html(page.title);
             $(resp).find(".image").html('<img src="' + createURL(page.imageLink) + '"></img>');
-            $(resp).find(".content").html(page.HTMLContent);
+            $(resp).find(".pccontent").html(page.HTMLContent);
             renderPage(iPage, resp, lesson);
           }  
         }
@@ -268,7 +309,7 @@ function createLWMenuBar(lw) {
     var c = $(lw).find(".container").first().get(0);
 
     var r1 = document.createElement('div');
-    $(r1).addClass("row lessonHeader")
+    $(r1).addClass("pcrow lessonHeader")
     c.appendChild(r1);
     
     var nav = document.createElement('div');
@@ -340,7 +381,7 @@ function createLessonWindow() {
     createLWMenuBar(lw);
             
     var r2 = document.createElement('div');
-    $(r2).addClass("row lessonBodyRow")
+    $(r2).addClass("pcrow lessonBodyRow")
     c.appendChild(r2);
     
     var nav = document.createElement('div');

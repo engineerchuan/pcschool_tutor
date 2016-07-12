@@ -81,7 +81,7 @@
 @media (min-width:1200px){.container{width:1170px}
 }
 .pcschool .container-fluid{margin-right:auto;margin-left:auto;padding-left:15px;padding-right:15px}
-.pcschool .row{margin-left:-15px;margin-right:-15px}
+.pcschool .pcrow{margin-left:-15px;margin-right:-15px}
 .pcschool .col-xs-1, .pcschool  .col-sm-1, .pcschool  .col-md-1, .pcschool  .col-lg-1, .pcschool  .col-xs-2, .pcschool  .col-sm-2, .pcschool  .col-md-2, .pcschool  .col-lg-2, .pcschool  .col-xs-3, .pcschool  .col-sm-3, .pcschool  .col-md-3, .pcschool  .col-lg-3, .pcschool  .col-xs-4, .pcschool  .col-sm-4, .pcschool  .col-md-4, .pcschool  .col-lg-4, .pcschool  .col-xs-5, .pcschool  .col-sm-5, .pcschool  .col-md-5, .pcschool  .col-lg-5, .pcschool  .col-xs-6, .pcschool  .col-sm-6, .pcschool  .col-md-6, .pcschool  .col-lg-6, .pcschool  .col-xs-7, .pcschool  .col-sm-7, .pcschool  .col-md-7, .pcschool  .col-lg-7, .pcschool  .col-xs-8, .pcschool  .col-sm-8, .pcschool  .col-md-8, .pcschool  .col-lg-8, .pcschool  .col-xs-9, .pcschool  .col-sm-9, .pcschool  .col-md-9, .pcschool  .col-lg-9, .pcschool  .col-xs-10, .pcschool  .col-sm-10, .pcschool  .col-md-10, .pcschool  .col-lg-10, .pcschool  .col-xs-11, .pcschool  .col-sm-11, .pcschool  .col-md-11, .pcschool  .col-lg-11, .pcschool  .col-xs-12, .pcschool  .col-sm-12, .pcschool  .col-md-12, .pcschool  .col-lg-12{position:relative;min-height:1px;padding-left:15px;padding-right:15px}
 .pcschool .col-xs-1, .pcschool  .col-xs-2, .pcschool  .col-xs-3, .pcschool  .col-xs-4, .pcschool  .col-xs-5, .pcschool  .col-xs-6, .pcschool  .col-xs-7, .pcschool  .col-xs-8, .pcschool  .col-xs-9, .pcschool  .col-xs-10, .pcschool  .col-xs-11, .pcschool  .col-xs-12{float:left}
 .pcschool .col-xs-12{width:100%}
@@ -294,8 +294,8 @@
 .pcschool .col-lg-offset-1{margin-left:8.33333333%}
 .pcschool .col-lg-offset-0{margin-left:0}
 }
-.pcschool .clearfix:before, .pcschool .clearfix:after, .pcschool .container:before, .pcschool .container:after, .pcschool .container-fluid:before, .pcschool .container-fluid:after, .pcschool .row:before, .pcschool .row:after{content:" ";display:table}
-.pcschool .clearfix:after, .pcschool .container:after, .pcschool .container-fluid:after, .pcschool .row:after{clear:both}
+.pcschool .clearfix:before, .pcschool .clearfix:after, .pcschool .container:before, .pcschool .container:after, .pcschool .container-fluid:before, .pcschool .container-fluid:after, .pcschool .pcrow:before, .pcschool .pcrow:after{content:" ";display:table}
+.pcschool .clearfix:after, .pcschool .container:after, .pcschool .container-fluid:after, .pcschool .pcrow:after{clear:both}
 .pcschool .center-block{display:block;margin-left:auto;margin-right:auto}
 .pcschool .pull-right{float:right !important}
 .pcschool .pull-left{float:left !important}

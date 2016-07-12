@@ -18,9 +18,27 @@
       },
       {
         "type" : "imagePage",
-        "title" : "My Image Page",
+        "title" : "The Search Bar",
         "imageLink" : "/test/searchbar.PNG",
-        "HTMLContent" : "Whatever it is"
+        "HTMLContent" : "Start typing in the search bar, as soon as you start typing, google will start showing results",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": ".sbib_a"
+          }
+        ]
+      },
+      {
+        "type" : "imagePage",
+        "title" : "The Search Button",
+        "imageLink" : "/test/searchbar.PNG",
+        "HTMLContent" : "Click the Google Search Button to actually search for something",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": "input[name='btnK']"
+          }
+        ]
       }
     ]
 
