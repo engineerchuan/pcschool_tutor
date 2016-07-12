@@ -1,3 +1,8 @@
+.pcschool {
+    
+    font-family: "Open Sans";
+}
+
 .highlighted {
     border-width: 5px;
     border-style: dotted;
@@ -97,4 +102,9 @@ crane's teal = rgba(39,115,92, 1.0);
     color: #ffffff;
     cursor: pointer;
     font-size: 16px;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
