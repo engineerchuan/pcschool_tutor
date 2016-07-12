@@ -157,32 +157,21 @@
           if (xhr.readyState == 4) {
             var resp = JSON.parse(xhr.responseText);
             callback(resp);
-
           }  
         }
         xhr.send();
     }
-    
-    function displayPage(iPage, lesson) {
 
-        var page = lesson.contents[iPage];
+
+    function renderPage(iPage, data, lesson) {
+
+
         var ma = $(".lessonMain").first().get(0);
         var ln = $(".lessonNav").first().get(0);
-        
-        if (page.HTMLContentLink) {
-        
-            var url = page.HTMLContentLink;
-            
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
-            xhr.open("GET", url, true);
-            function handleStateChange() {
-              if (xhr.readyState == 4) {
 
-                var resp = $.parseHTML(xhr.responseText);
+                $(ma).html(data);
 
-                $(ma).html(resp);
-
+                // bold the navigation page
                 var classKey = "lwPageNav" + "_" + iPage;
                 $(ln).find(".lwPageNav").removeClass("lwPageNavBolded");
                 $(ln).find("." + classKey).addClass("lwPageNavBolded");
@@ -210,10 +199,64 @@
                 } else {
                     $(".topMenu2").empty();
                 }
+
+
+    }
+    
+    function displayPage(iPage, lesson) {
+
+        var page = lesson.contents[iPage];
+        
+        if (page.type == "linkPage") {
+            // make asynchronous call for data then render page
+            var url = page.HTMLContentLink;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+            xhr.open("GET", url, true);
+            function handleStateChange() {
+              if (xhr.readyState == 4) {
+                var resp = $.parseHTML(xhr.responseText);
+                renderPage(iPage, resp, lesson);
               }  
             }
             xhr.send();
    
+        } else if (page.type == "contentPage") {  // this is a simplified text page
+
+            var url = "templates/dumbLesson.html";
+            
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+            xhr.open("GET", url, true);
+            function handleStateChange() {
+              if (xhr.readyState == 4) {
+                var resp = $.parseHTML(xhr.responseText);
+                $(resp).find(".title").html(page.title);
+                $(resp).find(".content").html(page.HTMLContent);
+                renderPage(iPage, resp, lesson);
+              }  
+            }
+            xhr.send();
+
+        } else if (page.type == "imagePage") {  // this is a simplified text page
+
+            var url = "templates/imagePage.html";
+            
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = handleStateChange; // Implemented elsewhere.
+            xhr.open("GET", url, true);
+            function handleStateChange() {
+              if (xhr.readyState == 4) {
+                var resp = $.parseHTML(xhr.responseText);
+                $(resp).find(".title").html(page.title);
+                $(resp).find(".image").html('<img src="' + page.imageLink + '"></img>');
+                $(resp).find(".content").html(page.HTMLContent);
+                renderPage(iPage, resp, lesson);
+              }  
+            }
+            xhr.send();
+
         }
     }
 
@@ -227,7 +270,7 @@
         c.appendChild(r1);
         
         var nav = document.createElement('div');
-        $(nav).addClass("col-md-2");
+        $(nav).addClass("col-md-2 topMenu");
         r1.appendChild(nav);
         $(nav).html("PC School Web Tutor");
         $(nav).css("color", "#ffffff");
@@ -258,12 +301,22 @@
                     $(lw).addClass("collapsed");
                     $(lw).removeClass("uncollapsed");
                     maximized = false;
+
+                    // hide all menu options
+                    $(".topMenu1").css("visibility", "hidden");
+                    $(".topMenu2").css("visibility", "hidden");
+
                 } else {
                     
                     $(this).html("Minimize");
                     $(lw).removeClass("collapsed");
                     $(lw).addClass("uncollapsed");
-                    maximized = true;;
+                    maximized = true;
+
+                    // show menu options
+                    $(".topMenu1").css("visibility", "visible");
+                    $(".topMenu2").css("visibility", "visible");
+
                 }
             }
         );
@@ -299,16 +352,15 @@
         
     }
     
-    
     function updateLessonNav(lesson) {
 
         var ln = $(".lessonNav").first().get(0);
         
         var d = document.createElement('div');
-        $(d).addClass("navTitle");
+        $(d).addClass("navTitle h4");
         ln.appendChild(d);     
         $(d).html(lesson.title);
-        
+
         for (iPage = 0; iPage < lesson.contents.length; ++iPage) {
            console.log("ipage = ", iPage);
            var page = document.createElement('div');

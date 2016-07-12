@@ -13,7 +13,10 @@
   "content_scripts": [
     {
       "matches": ["*://www.google.com/*", "file://*pcschool_web/*"],
-      "css" : ["3rd/bootstrap.css", "css/pcschool_web.css"],
+      "css" : ["3rd/bootstrap.css",
+               "css/pcschool.css"],
+               "css/pcschool_lesson_nav.css",
+               "css/pcschool_lesson_main.css"]
       "js": ["3rd/jquery-3.0.0.min.js", "js/pcschool_web.js"]
     }
   ],

@@ -2,14 +2,25 @@
     "title" : "Using Google.com",
     "contents": [
       {
-        "class" : "page",
+        "type" : "linkPage",
         "title" : "Introduction",
         "HTMLContentLink" : "/lessons/test2/intro.html"
       },
       {
-        "class" : "page",
+        "type" : "contentPage",
         "title" : "Getting to Google",
-        "HTMLContentLink" : "/lessons/test2/gettingtogoogle.html"
+        "HTMLContent": "Type in www.google.com into the browser bar"
+      },
+      {
+        "type" : "contentPage",
+        "title" : "The Search Bar",
+        "HTMLContent" : "The search bar shows what you need to search for"
+      },
+      {
+        "type" : "imagePage",
+        "title" : "My Image Page",
+        "imageLink" : "/test/searchbar.PNG",
+        "HTMLContent" : "Whatever it is"
       }
     ]
 
