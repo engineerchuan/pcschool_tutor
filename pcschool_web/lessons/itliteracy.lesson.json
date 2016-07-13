@@ -1,0 +1,51 @@
+{
+    "title" : "Avoiding Getting Ripped Off On The Internet",
+    "contents": [
+      {
+        "type" : "contentPage",
+        "title" : "Introduction",
+        "HTMLContent" : "<p>The internet is a very powerful tool.  It allows us to do everything from use Facebook, to do banking, and to learn online.</p><p>However, with all its benefits there are also some things you should worry about.  Many people and companies attempt to take advantage of internet users.</p><p>This lesson teaches you some basic techniques to protect yourself on the Internet.</p>"
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Advertisements",
+        "HTMLContent": "<p>Many websites on the Internet are free.  These companies make their money by having you click on advertisements.</p><p>Sometimes, ads are useful.  However a lot of the time, they are disguised to make you click on them.</p><p>In this section we will teach you how to identify ads so you can choose when to click on them.</p>"
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Ads in Search",
+        "HTMLContent" : "<p>Google is a common search engine and it relies on ads to make money.  When you type in a search, some of the results are ads.  Sometimes these ads are relevant, sometimes they aren't.</p><p>Above we have a screenshot of a Google search for \"Cars\".  Find 2 ads.</p>",
+        "overlays" : [
+          {
+            "type" : "fullScreenPictureOverlay",
+            "imageLink": "lessons/itliteracy/philadelphia_cars.PNG"
+          }
+        ]
+      },
+      {
+        "type" : "imagePage",
+        "title" : "The Search Bar",
+        "imageLink" : "/test/searchbar.PNG",
+        "HTMLContent" : "Start typing in the search bar, as soon as you start typing, google will start showing results",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": ".sbib_a"
+          }
+        ]
+      },
+      {
+        "type" : "imagePage",
+        "title" : "The Search Button",
+        "imageLink" : "/test/searchbar.PNG",
+        "HTMLContent" : "Click the Google Search Button to actually search for something",
+        "overlays" : [
+          {
+            "type" : "elementOverlay",
+            "searchQuery": "input[name='btnK']"
+          }
+        ]
+      }
+    ]
+
+}

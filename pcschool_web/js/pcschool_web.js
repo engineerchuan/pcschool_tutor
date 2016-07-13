@@ -108,9 +108,21 @@ function createOverlay(spec, document) {
 
     var overlay = null;
     
-    if (spec.type == "fixed") {
+    if (spec.type == "fullScreenPictureOverlay") {
         
+        //"imageLink": "lessons/itliteracy/philadelphia_cars.PNG"
+        overlay = document.createElement('div');
+        $(overlay).addClass("fullScreenPictureOverlay");
+        $(overlay).css("background-image", createURL("lessons/itliteracy/philadelphia_cars.PNG"));
 
+        overlay.attach = function() {
+            document.body.appendChild(overlay);
+        }
+
+        overlay.detach = function() {
+            $(overlay).remove();
+        }
+        
         
     } else if (spec.type == "elementOverlay") {
         overlay = document.createElement('div');
@@ -153,18 +165,15 @@ function createOverlay(spec, document) {
             $(overlay).remove();
             overlay.active = false;
         }
-        
-        var ma = $(".lessonMain").first().get(0);
-        $(ma).bind("DOMSubtreeModified.pcschool",function(){
-            $(ma).unbind("DOMSubtreeModified.pcschool");
-            overlay.detach();
-            
-        });
-        
-
-        
-        
+                
     }
+
+    var ma = $(".lessonMain").first().get(0);
+    $(ma).bind("DOMSubtreeModified.pcschool",function(){
+      $(ma).unbind("DOMSubtreeModified.pcschool");
+      overlay.detach();
+            
+    });
     overlay.attach();
     
 }

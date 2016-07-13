@@ -2,15 +2,14 @@ $( document ).ready(function() {
     createLessonWindow();
     
     console.log("status - ready");
-    
+  
     // send a signal to enable the school
     $("#pcschool_extension").addClass("enabled");
     
     createURL = function(url) {
         return chrome.extension.getURL(url);
     }
-   
     
-    makeLessonRequest("lessons/google.json", updateLessonNav);
+    makeLessonRequest("lessons/itliteracy.lesson.json", updateLessonNav);
  
 });
