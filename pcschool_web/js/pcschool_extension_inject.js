@@ -10,6 +10,6 @@ $( document ).ready(function() {
         return chrome.extension.getURL(url);
     }
     
-    makeLessonRequest("lessons/itliteracy.lesson.json", updateLessonNav);
+    makeLessonRequest("lessons/itliteracy.lesson.json", updateLessonNavPage(0));
  
 });

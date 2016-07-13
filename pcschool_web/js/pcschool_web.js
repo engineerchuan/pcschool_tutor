@@ -99,6 +99,55 @@ function createInstructions(spec, document) {
     return d;
 }    
 
+
+function createMiniOverlay(moSpec, parent) {
+
+  mo = document.createElement('div');
+  $(mo).addClass("minioverlay");
+  if (moSpec.type == "hidden") {
+    $(mo).addClass("hiddenOverlay");
+  }
+
+  function resizeOverlay() {
+    if (parent.active) {
+
+      var width = $(parent).width();
+
+      var moLeft = width * moSpec.left_width_perc / 100.0;
+      var moWidth = width * moSpec.width_width_perc / 100.0;
+      var moTop = width * moSpec.top_width_perc / 100.0;
+      var moHeight = width * moSpec.height_width_perc / 100.0;
+
+      $(mo).css("left", moLeft + "px");
+      $(mo).css("top", moTop + "px");
+      $(mo).css("width", moWidth + "px");
+      $(mo).css("height", moHeight + "px");
+      setTimeout(resizeOverlay, 1000);
+    } else {
+      console.log("resize overlay stopped");
+    }
+  }
+
+  // address the revealing
+  if (moSpec.type == "hidden") {
+    $(mo).bind("click.pcschool", function() {
+      $(mo).removeClass("hiddenOverlay");
+      $(mo).addClass("hiddenOverlayRevealed");
+      $(mo).unbind("click.pcschool");
+    });
+  }
+
+  mo.attach = function () {
+    parent.appendChild(mo);
+    resizeOverlay();
+  }
+
+  mo.detach = function () {
+    $(mo).unbind("click.pcschool");
+  }
+  return mo;
+}
+
 function createOverlay(spec, document) {
     
     // every overlay can be constructed
@@ -110,17 +159,40 @@ function createOverlay(spec, document) {
     
     if (spec.type == "fullScreenPictureOverlay") {
         
-        //"imageLink": "lessons/itliteracy/philadelphia_cars.PNG"
+
         overlay = document.createElement('div');
         $(overlay).addClass("fullScreenPictureOverlay");
-        $(overlay).css("background-image", createURL("lessons/itliteracy/philadelphia_cars.PNG"));
+        $(overlay).css("background-image", "url(" + createURL(spec.imageLink) + ")");
+        overlay.childOverlays = [];
+
+        // add some mini overlays
+        if (spec.overlays) {
+          for (var iMO in spec.overlays) {
+            var moSpec = spec.overlays[iMO];
+            var mo = createMiniOverlay(moSpec, overlay);
+            overlay.childOverlays.push(mo);
+
+          }
+        } 
+
 
         overlay.attach = function() {
             document.body.appendChild(overlay);
+            overlay.active = true;
+            for (var iSub in overlay.childOverlays) {
+              var mo = overlay.childOverlays[iSub];
+              mo.attach();
+            }
         }
 
         overlay.detach = function() {
+            for (var iSub in overlay.childOverlays) {
+              var mo = overlay.childOverlays[iSub];
+              mo.detach();
+            }
+
             $(overlay).remove();
+            overlay.active = false;
         }
         
         
@@ -305,7 +377,7 @@ function displayPage(iPage, lesson) {
 
     console.log("displaying page");
     var page = lesson.contents[iPage];
-    
+
     if (page.type == "linkPage") {
         // make asynchronous call for data then render page
         var url = page.HTMLContentLink;
@@ -467,7 +539,10 @@ function createLessonWindow() {
     
 }
 
-function updateLessonNav(lesson) {
+function updateLessonNavPage(startPage) {
+  function inner(lesson) {
+
+
 
     var ln = $(".lessonNav").first().get(0);
     
@@ -493,7 +568,9 @@ function updateLessonNav(lesson) {
        })(iPage);
     }
     
-    // go and populate the first lesson
-    
-    displayPage(0, lesson, function() {});
+
+    displayPage(startPage, lesson, function() {});
+
+  }
+  return inner;
 }

@@ -29,9 +29,46 @@
         ]
       },
       {
-        "type" : "videoPage",
-        "title" : "Display a video",
-        "HTMLContent": "This shows a video"
+        "type" : "contentPage",
+        "title" : "Image Overlay",
+        "HTMLContent": "This should display an image with the ad highlighted",
+        "overlays" : [
+          {
+            "type" : "fullScreenPictureOverlay",
+            "imageLink" : "lessons/itliteracy/philadelphia_cars.PNG",
+            "overlays" : [
+              {
+                "type" : "standard",
+                "left_width_perc" : "6.5",
+                "top_width_perc" : "10",
+                "width_width_perc" : "30",
+                "height_width_perc" : "10"
+              }
+            ]
+
+          }
+        ]
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Image Overlay Hidden",
+        "HTMLContent": "This should display a hidden image and if you click on the sign in it will light up in green",
+        "overlays" : [
+          {
+            "type" : "fullScreenPictureOverlay",
+            "imageLink" : "lessons/itliteracy/philadelphia_cars.PNG",
+            "overlays" : [
+              {
+                "type" : "hidden",
+                "left_width_perc" : "93",
+                "top_width_perc" : "0.5",
+                "width_width_perc" : "4.8",
+                "height_width_perc" : "2"
+              }
+            ]
+
+          }
+        ]
       }
     ]
 

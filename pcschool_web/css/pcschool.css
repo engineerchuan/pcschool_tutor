@@ -124,6 +124,30 @@ crane's teal = rgba(39,115,92, 1.0);
   position: absolute;
   width: 100%;
   /*background-color: #ff00ff;*/
-  z-index: 1000;
+  z-index: 800;
   height: 100%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+}
+
+.fullScreenPictureOverlay .miniOverlay {
+
+  position: absolute;
+  border-width: 10px;
+  border-style: dotted;
+  background: rgba(0, 0, 0, 0.0);
+  border-color: red;
+  z-index: 1001;
+ 
+}
+
+.fullScreenPictureOverlay .hiddenOverlay {
+  border-width: 0px;
+}
+
+.fullScreenPictureOverlay .hiddenOverlayRevealed {
+  border-width: 10px;
+  border-color: green;
 }
