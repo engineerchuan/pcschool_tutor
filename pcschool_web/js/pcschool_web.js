@@ -102,8 +102,8 @@ function createInstructions(spec, document) {
 
 function createMiniOverlay(moSpec, parent) {
 
-  mo = document.createElement('div');
-  $(mo).addClass("minioverlay");
+  var mo = document.createElement('div');
+  $(mo).addClass("miniOverlay");
   if (moSpec.type == "hidden") {
     $(mo).addClass("hiddenOverlay");
   }

@@ -51,6 +51,34 @@
       },
       {
         "type" : "contentPage",
+        "title" : "Multiple Image Overlay",
+        "HTMLContent": "This should display muliple images on top of stuff",
+        "overlays" : [
+          {
+            "type" : "fullScreenPictureOverlay",
+            "imageLink" : "lessons/itliteracy/philadelphia_cars.PNG",
+            "overlays" : [
+              {
+                "type" : "standard",
+                "left_width_perc" : "6.5",
+                "top_width_perc" : "11",
+                "width_width_perc" : "30",
+                "height_width_perc" : "9"
+              },
+              {
+                "type" : "standard",
+                "left_width_perc" : "6.5",
+                "top_width_perc" : "21.5",
+                "width_width_perc" : "35",
+                "height_width_perc" : "8"
+              }
+            ]
+
+          }
+        ]
+      },
+      {
+        "type" : "contentPage",
         "title" : "Image Overlay Hidden",
         "HTMLContent": "This should display a hidden image and if you click on the sign in it will light up in green",
         "overlays" : [
