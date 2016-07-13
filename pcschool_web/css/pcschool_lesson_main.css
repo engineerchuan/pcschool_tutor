@@ -6,10 +6,16 @@
     background: rgba(100, 200, 200, 0.98);
     /*background: rgba(39,115,92, 1.0);*/
     height: 100%;
+
 }
 
 .lessonMain .pccontent {
-   text-align: center;    
+  text-align: center;
+  overflow-y: scroll;
+}
+
+.lessonMain .pcrow {
+  padding-top: 10px;
 }
 
 .lessonMain .title {

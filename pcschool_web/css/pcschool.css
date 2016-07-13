@@ -107,6 +107,7 @@ crane's teal = rgba(39,115,92, 1.0);
 .lessonBodyRow {
     min-height: 80%;
     height: 100%;
+    padding-left: 10px;
 }
 
 .topMenu {
@@ -123,7 +124,7 @@ crane's teal = rgba(39,115,92, 1.0);
 .fullScreenPictureOverlay {
   position: absolute;
   width: 100%;
-  /*background-color: #ff00ff;*/
+  background-color: #000000;
   z-index: 800;
   height: 100%;
   background-size: 100% auto;

@@ -36,7 +36,7 @@
       {
         "type" : "contentPage",
         "title" : "Ads in Search Continued",
-        "HTMLContent" : "<p>There is one more ad on this page</p><p>Can you find it?</p>",
+        "HTMLContent" : "<p>There is one more ad on this page</p><p>Can you find it? Click on it when you find it.</p>",
         "overlays" : [
           {
             "type" : "fullScreenPictureOverlay",
@@ -50,16 +50,63 @@
                 "height_width_perc" : "10"
               },
               {
-                "type" : "standard",
+                "type" : "hidden",
                 "left_width_perc" : "6.5",
-                "top_width_perc" : "20",
-                "width_width_perc" : "30",
-                "height_width_perc" : "10"
+                "top_width_perc" : "21.5",
+                "width_width_perc" : "35",
+                "height_width_perc" : "8"
               }
             ]
 
           }
 
+        ]
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Pop Up Ads",
+        "HTMLContent" : "<p>Oftentimes, when you go to a website, the screen will darken and a pop up will come up</p><p>The point of a pop up is to distract you and get you to do something such as sign up for a newsletter</p><p>Learn to recognize and close pop ups</p><p>In the image above, the popup is highlighted in red.</p>",
+        "overlays" : [
+          {
+            "type" : "fullScreenPictureOverlay",
+            "imageLink" : "lessons/itliteracy/popup.PNG",
+            "overlays" : [
+              {
+                "type" : "standard",
+                "left_width_perc" : "30.5",
+                "top_width_perc" : "18.5",
+                "width_width_perc" : "36.5",
+                "height_width_perc" : "20"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type" : "contentPage",
+        "title" : "Closing Pop Up Ads",
+        "HTMLContent" : "<p>Whenever you see pop up ads, the best thing to do usually is to ignore them</p><p>Specifically you should look for an X symbol or a No or Cancel</p><p>Click above in the picture at the X to close this popup</p>",
+        "overlays" : [
+          {
+            "type" : "fullScreenPictureOverlay",
+            "imageLink" : "lessons/itliteracy/popup.PNG",
+            "overlays" : [
+              {  
+                "type" : "standard",
+                "left_width_perc" : "30.5",
+                "top_width_perc" : "18.5",
+                "width_width_perc" : "36.5",
+                "height_width_perc" : "20"
+              },
+              {  
+                "type" : "hidden",
+                "left_width_perc" : "64.5",
+                "top_width_perc" : "19.75",
+                "width_width_perc" : "1.25",
+                "height_width_perc" : "1.25"
+              }
+            ]
+          }
         ]
       }
     ]
