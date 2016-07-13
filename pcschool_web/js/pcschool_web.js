@@ -45,7 +45,7 @@ function addWordEnteredCondition(overlay, instructions, spec, document) {
     var textbox = $(instructions).children().first().get(0);
     var word = spec.clearCondition.word;
     
-    var wordListener = function(ev) {
+  var wordListener = function(ev) {
         if (word[0] == ev.key) {
             word = word.slice(1,word.length);
             textbox.update(word);

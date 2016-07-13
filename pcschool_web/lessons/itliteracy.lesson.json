@@ -14,36 +14,52 @@
       {
         "type" : "contentPage",
         "title" : "Ads in Search",
-        "HTMLContent" : "<p>Google is a common search engine and it relies on ads to make money.  When you type in a search, some of the results are ads.  Sometimes these ads are relevant, sometimes they aren't.</p><p>Above we have a screenshot of a Google search for \"Cars\".  Find 2 ads.</p>",
+        "HTMLContent" : "<p>Google is a common search engine and it relies on ads to make money.  When you type in a search, some of the results are ads.  Sometimes these ads are relevant, sometimes they aren't.</p><p>See the screenshot of a Google Search for \"Cars\".  One of the ads is highlighted in red.</p>",
         "overlays" : [
           {
             "type" : "fullScreenPictureOverlay",
-            "imageLink": "lessons/itliteracy/philadelphia_cars.PNG"
+            "imageLink" : "lessons/itliteracy/philadelphia_cars.PNG",
+            "overlays" : [
+              {
+                "type" : "standard",
+                "left_width_perc" : "6.5",
+                "top_width_perc" : "10",
+                "width_width_perc" : "30",
+                "height_width_perc" : "10"
+              }
+            ]
+
           }
+
         ]
       },
       {
-        "type" : "imagePage",
-        "title" : "The Search Bar",
-        "imageLink" : "/test/searchbar.PNG",
-        "HTMLContent" : "Start typing in the search bar, as soon as you start typing, google will start showing results",
+        "type" : "contentPage",
+        "title" : "Ads in Search Continued",
+        "HTMLContent" : "<p>There is one more ad on this page</p><p>Can you find it?</p>",
         "overlays" : [
           {
-            "type" : "elementOverlay",
-            "searchQuery": ".sbib_a"
+            "type" : "fullScreenPictureOverlay",
+            "imageLink" : "lessons/itliteracy/philadelphia_cars.PNG",
+            "overlays" : [
+              {
+                "type" : "standard",
+                "left_width_perc" : "6.5",
+                "top_width_perc" : "10",
+                "width_width_perc" : "30",
+                "height_width_perc" : "10"
+              },
+              {
+                "type" : "standard",
+                "left_width_perc" : "6.5",
+                "top_width_perc" : "20",
+                "width_width_perc" : "30",
+                "height_width_perc" : "10"
+              }
+            ]
+
           }
-        ]
-      },
-      {
-        "type" : "imagePage",
-        "title" : "The Search Button",
-        "imageLink" : "/test/searchbar.PNG",
-        "HTMLContent" : "Click the Google Search Button to actually search for something",
-        "overlays" : [
-          {
-            "type" : "elementOverlay",
-            "searchQuery": "input[name='btnK']"
-          }
+
         ]
       }
     ]
