@@ -1,0 +1,64 @@
+<html>
+
+  <head>
+    <title>IT Literacy</title>
+
+    <!-- extension spoofing -->
+
+    <script src="../3rd/jquery-3.0.0.min.js"></script>
+    <script src="../js/pcschool_web.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../3rd/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../3rd/opensans.css">
+    <link rel="stylesheet" type="text/css" href="../css/pcschool.css">
+    <link rel="stylesheet" type="text/css" href="../css/pcschool_lesson_main.css">
+    <link rel="stylesheet" type="text/css" href="../css/pcschool_lesson_nav.css">
+
+    <script>
+
+      $(document).ready(function() {
+
+    	createLessonWindow();
+    	
+    	console.log("status - ready");
+    	
+        // send a signal to enable the school
+        $("#pcschool_extension").addClass("enabled");
+
+        createURL = function (url) {
+          return "../" + url;
+        }
+
+
+
+        $.urlParam = function(name){
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+          if (results==null){
+            return null;
+          }
+          else{
+            return results[1] || 0;
+          }
+        }
+        var iPage = 0;
+        if ($.urlParam('page')) {
+          iPage = $.urlParam('page');
+        }
+
+        makeLessonRequest(createURL("lessons/itliteracy.lesson.json"), updateLessonNavPage(iPage));
+
+      });
+	
+    </script>
+
+    <!-- end extension spoofing -->
+
+
+  </head>
+
+  <body>
+
+    
+  </body>
+
+</html>

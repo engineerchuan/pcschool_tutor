@@ -7,6 +7,7 @@ TODO:
 - Create a full length lesson 
   - Google.com searching?
   - Using Yahoo Mail?
+- Full Screen Mode
 
 BUGS:
 
